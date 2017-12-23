@@ -7,7 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyberx.todo.converter.TodoConverter;
 import com.cyberx.todo.dao.TodoDao;
+import com.cyberx.todo.model.Todo;
 import com.cyberx.todo.vo.TodoVo;
 
 @Service
@@ -26,33 +28,34 @@ public class TodoServiceImpl implements TodoService {
 	
 	@Transactional
 	@Override
-	public void add(TodoVo todo) {
-		// TODO Auto-generated method stub
-		
+	public void add(TodoVo vo) {
+		Todo todo = TodoConverter.voToBo(vo);
+		this.getTodoDao().add(todo);
 	}
 	@Transactional
 	@Override
-	public void update(TodoVo todo) {
-		// TODO Auto-generated method stub
+	public void update(TodoVo vo) {
+		Todo todo = TodoConverter.voToBo(vo);
+		this.getTodoDao().update(todo);
 		
 	}
 	@Transactional
 	@Override
 	public void remove(int id) {
-		// TODO Auto-generated method stub
+		this.getTodoDao().delete(id);
 		
 	}
 	@Transactional
 	@Override
 	public List<TodoVo> list() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Todo> bo = this.getTodoDao().list();
+		return TodoConverter.boToVo(bo);
 	}
 	@Transactional
 	@Override
 	public List<TodoVo> search(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Todo> bo = this.getTodoDao().search(key);
+		return TodoConverter.boToVo(bo);
 	}
 
 }
