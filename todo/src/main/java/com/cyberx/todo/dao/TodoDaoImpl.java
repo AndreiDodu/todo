@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cyberx.todo.model.Todo;
@@ -12,16 +13,17 @@ import com.cyberx.todo.model.Todo;
 @Repository
 public class TodoDaoImpl implements TodoDao {
 
+	@Autowired(required=true)
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return this.sessionFactory;
 	}
-	
+
 	private Session getSession() {
 		return this.getSessionFactory().getCurrentSession();
 	}
@@ -45,13 +47,13 @@ public class TodoDaoImpl implements TodoDao {
 
 	@Override
 	public List<Todo> search(String key) {
-		return this.getSession().createCriteria(Todo.class).add(Restrictions.like("todo", "%"+key+"%")).list();
+		return this.getSession().createCriteria(Todo.class).add(Restrictions.like("todo", "%" + key + "%")).list();
 	}
 
 	@Override
 	public void delete(int id) {
-		Todo todo = (Todo)this.getSession().load(Todo.class, id);
-		if (todo!=null) {
+		Todo todo = (Todo) this.getSession().load(Todo.class, id);
+		if (todo != null) {
 			this.getSession().delete(todo);
 		}
 

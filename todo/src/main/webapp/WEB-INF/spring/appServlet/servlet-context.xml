@@ -52,6 +52,7 @@
 	<context:component-scan base-package="com.cyberx.todo.controller" />
 	<context:component-scan base-package="com.cyberx.todo.service" />
 	<context:component-scan base-package="com.cyberx.todo.dao" />
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<beans:bean id="transactionManager"

@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -6,9 +7,16 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	To Do
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P> 
+<c:url var="url" value="/" />
+<form:form action="${url}" method="post"  modelAttribute="todo">
+<label>To do</label>
+<form:input path="todo" />
+<input type="submit" value="Salva"/>
+</form:form>
+</P>
 </body>
 </html>
