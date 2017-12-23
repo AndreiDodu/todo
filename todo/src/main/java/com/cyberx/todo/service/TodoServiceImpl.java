@@ -16,10 +16,14 @@ public class TodoServiceImpl implements TodoService {
 	@Autowired(required=true)
 	private TodoDao todoDao;
 	
-	@Transactional
 	public void setTodoDao(TodoDao todoDao) {
 		this.todoDao = todoDao;
 	}
+	
+	protected TodoDao getTodoDao() {
+		return this.todoDao;
+	}
+	
 	@Transactional
 	@Override
 	public void add(TodoVo todo) {

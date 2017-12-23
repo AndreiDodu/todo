@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.cyberx.todo.model.Todo;
@@ -27,31 +28,32 @@ public class TodoDaoImpl implements TodoDao {
 
 	@Override
 	public void add(Todo todo) {
-		// TODO Auto-generated method stub
+		this.getSession().persist(todo);
 
 	}
 
 	@Override
 	public void update(Todo todo) {
-		// TODO Auto-generated method stub
+		this.getSession().update(todo);
 
 	}
 
 	@Override
 	public List<Todo> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getSession().createQuery("from Todo").list();
 	}
 
 	@Override
 	public List<Todo> search(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getSession().createCriteria(Todo.class).add(Restrictions.like("todo", "%"+key+"%")).list();
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		Todo todo = (Todo)this.getSession().load(Todo.class, id);
+		if (todo!=null) {
+			this.getSession().delete(todo);
+		}
 
 	}
 
